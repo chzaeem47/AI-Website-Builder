@@ -5,9 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, provider } from '../features/firebase.js';
 import { serverURL } from '../App.jsx';
 import axios from 'axios'
-import { toast } from 'react-toastify';
+import Singup from '../pages/singup.jsx';
+import {toast} from 'react-toastify'
 
-function HomeLeft({dark}) {
+function SingupHome({dark}) {
 
 const authGoogle = async()=>{
   try{
@@ -22,77 +23,86 @@ const authGoogle = async()=>{
     },{withCredentials:true})
 
     console.log(data)
-   
+    
   }catch(e){
     console.log(e)
   }
 }
 
+const navigate = useNavigate()
+
+const [name, setname] = useState("")
 const [email, setemail] = useState("")
 const [password, setpassword] = useState("")
 const [loading, setloading] = useState(false)
 const [error, seterror] = useState("")
 
-const navigate = useNavigate()
-
-const login = async(e)=>{
+const signUp = async(e)=>{
+ 
+  e.preventDefault();
 
   try{
-  e.preventDefault()
-  setloading(true)
-  seterror("")
 
-  const {data} = await axios.post(`${serverURL}/api/auth/login`,{
-    email,password
-  },{withCredentials:true})
+    setloading(true);
+    seterror("")
 
-  console.log(data)
-  
-  toast.success("Login Succesfully or SignUp First",{
-    position:'top-left',
-    autoClose:2000,
-    style:{
-      width: "400px",
-      minHeight: "80px",
-      fontSize: "18px",
-    }
+    const {data} = await axios.post(`${serverURL}/api/auth/signup`,{
+      name,email,password
+
+    },{withCredentials:true})
+
+    console.log(data)
+
+    toast.success("Account Created Succesfully",{
+      position:'top-left',
+      autoClose:2000,
+      style:{
+        width: "400px",
+        minHeight: "80px",
+        fontSize: "18px",
+      }
     })
-  
+
+    setname("")
     setemail("")
     setpassword("")
-  
+
     setTimeout(() => {
-      navigate("/");
+        navigate("/login");
     }, 500);
 
-  }catch(error){
-    console.log(error);
-    const errMsg = error.response?.data?.message || "Login failed";
-    seterror(errMsg);
-          
-    toast.error(errMsg);
-    
-  } finally {
-      setloading(false);
-  }
-}
 
+  }catch(error){
+      console.log(error);
+      const errMsg = error.response?.data?.message || "Signup failed";
+      seterror(errMsg);
+      
+      toast.error(errMsg);
+
+    } finally {
+      setloading(false);
+    }
+}
 
   return (
     <div className='relative left-17'>
       
       {/*WELCOME BACK TEXT*/}
       <div className='flex flex-col justify-between gap-3 relative top-35 left-26'>
-      <h1 className={`text-5xl font-semibold font-serif ${dark ? "text-purple-500" : "text-black"}`}>Welcome Back!</h1>
+      <h1 className={`${dark ? "text-purple-500" : "text-black"} text-5xl font-semibold font-serif`}>Welcome Back!</h1>
       <p className={`font-sans p-3 text-[18px] ${dark ? "text-white" : "text-black"}`}>Please enter login details below</p>
       </div>
 
       {/*LOGIN FORM*/}
 
-      <form className="w-full max-w-[420px] flex flex-col gap-4 relative top-50 left-30" onSubmit={login}>
+      <form className="w-full max-w-[420px] flex flex-col gap-4 relative top-50 left-30" onSubmit={signUp}>
 
+        <input type="text" placeholder='Name' value={name} onChange={(e)=>setname(e.target.value)} 
+        className={`w-150 h-18 px-5 rounded-xl border border-purple-200 outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white" : "bg-white text-black"}`}/>
+        
         <input type="text" placeholder="Email" value={email} onChange={(e)=>setemail(e.target.value)}
-        className={`w-150 h-18 px-5 rounded-xl border border-purple-200 text-sm outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        className={`w-150 h-18 px-5 rounded-xl border border-purple-200 outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
         text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white" : "bg-white text-black"}`}
         />
         
@@ -107,9 +117,9 @@ const login = async(e)=>{
           </button>
         </div>
 
-        <button type="submit" disabled={loading} className={`mt-2 h-16 rounded-xl
+         <button type="submit" disabled={loading} className={`mt-2 h-16 rounded-xl
         text-[26px] font-serif w-150 ${dark ? "bg-purple-800 text-white" : "bg-black text-white"}`}>
-          {loading ? "Authenticating" : "Login"}
+          {loading ? "SigningUp" : "SignUp"}
         </button>
       </form>
 
@@ -119,23 +129,22 @@ const login = async(e)=>{
       <div className="flex items-center gap-4 w-full max-w-[420px] my-6 relative top-55 left-52">
         <div className="flex-1 h-px bg-gray-600"></div>
 
-          <span className={`text-[20px] font-medium whitespace-nowrap ${dark ? "text-white" : "text-gray-600"}`}>
-          or continue with
-          </span>
+         <span className={`text-[20px] font-medium whitespace-nowrap ${dark ? "text-white" : "text-gray-600"}`}>or continue with</span>
+
         <div className="flex-1 h-px bg-gray-600"></div>
       </div>
 
 
       {/**LOGIN WITH GOOGLE BUTTOn */}
-      <button type="button" className={`w-150 h-16 rounded-xl border border-gray-300 text-[25px] font-medium flex items-center justify-center gap-4 hover:bg-gray-50 transition
+     <button type="button" className={`w-150 h-16 rounded-xl border border-gray-300 text-[25px] font-medium flex items-center justify-center gap-4 hover:bg-gray-50 transition
       font-serif items-center relative top-60 left-30 ${dark ? "bg-gray-800 text-white" : "bg-white text-black"}`}
       onClick={authGoogle}><FcGoogle size={38}/>Continue with Google</button>
 
 
       {/**SIGNUP */}
-      <p className={`text-center text-[20px] mt-3 relative top-85 right-150 ${dark ? "text-gray-300" : "text-black"}`}>Don't have an account?{" "}
+      <p className={`text-center text-[20px] mt-3 relative top-68 right-150  ${dark ? "text-gray-300" : "text-black"}`}>Already have an account?{" "}
 
-      <Link to="/signup" className={`font-semibold hover:text-purple-600 transition ${dark ? "text-purple-400" : "text-black"}`}>SignUp</Link></p>
+      <Link to="/login" className={`font-semibold hover:text-purple-600 transition ${dark ? "text-purple-400" : "text-black"}`}>Login</Link></p>
 
     </div>
 
@@ -143,4 +152,4 @@ const login = async(e)=>{
   )
 }
 
-export default HomeLeft
+export default SingupHome
