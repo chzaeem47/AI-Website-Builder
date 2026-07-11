@@ -152,73 +152,110 @@ ABSOLUTE RULES
 `;
 
 
-export const generateWebsite = async(req,res)=>{
 
-    try{
-        const {prompt} = req.body
-        if(!prompt){
-            return res.status(400).json({message : "Prompt is Required!"})
+
+export const generateWebsite = async (req, res) => {
+
+    try {
+        const { prompt } = req.body
+
+        const slug =
+            prompt
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-|-$/g, "")
+            + "-" +
+            Date.now();
+
+        if (!prompt) {
+            return res.status(400).json({ message: "Prompt is Required!" })
 
         }
 
         const user = await userModel.findById(req.user._id)
 
-        if(!user){
-            return res.status(400).json({message : "User Not Found!"})
+        if (!user) {
+            return res.status(400).json({ message: "User Not Found!" })
         }
 
-        if(user.credits<50){
-            return res.status(400).json({message : "Not Enough Credits!"})
+        if (user.credits < 50) {
+            return res.status(400).json({ message: "Not Enough Credits!" })
         }
-        
-        const finalPrompt = masterPrompt.replace("{USER_PROMPT}",prompt)
 
-        let raw=""
+        const finalPrompt = masterPrompt.replace("{USER_PROMPT}", prompt)
+
+        let raw = ""
         let parsed = null
 
         for (let i = 0; i < 2 && !parsed; i++) {
-            raw=await generateResponse(finalPrompt)
+            raw = await generateResponse(finalPrompt)
             parsed = await extractJson(raw)
 
-            if(!parsed){
-              raw=await generateResponse(finalPrompt + "\n\nRETURN ONLY RAW JSON")  
-              parsed = await extractJson(raw)
- 
+            if (!parsed) {
+                raw = await generateResponse(finalPrompt + "\n\nRETURN ONLY RAW JSON")
+                parsed = await extractJson(raw)
+
             }
         }
 
-        if(!parsed.code){
+        if (!parsed.code) {
             console.log("Ai Response have no Code!")
         }
 
         const website = await websiteModel.create({
 
-            user:user._id,
-            title:prompt.slice(0,60),
-            latestCode:parsed.code,
-            conversation:[
+            user: user._id,
+            title: prompt.slice(0, 60),
+            latestCode: parsed.code,
+            slug: slug,
+            conversation: [
 
                 {
-                    role:"Ai",
-                    content:parsed.message
+                    role: "Ai",
+                    content: parsed.message
                 },
                 {
-                    role:"User",
-                    content:prompt
+                    role: "User",
+                    content: prompt
                 },
 
             ]
         })
 
-        user.credits = user.credits-50
+        user.credits = user.credits - 50
         await user.save()
 
         return res.status(201).json({
-            website:website._id,
-            remainingCredits:user.credits
+            website: website._id,
+            remainingCredits: user.credits
         })
-    }catch(error){
+    } catch (error) {
 
         return res.status(500).json(`Generate website Error ${error}`)
     }
+}
+
+export const getWebsiteById = async (req, res) => {
+
+    try {
+        const website = await websiteModel.findOne({
+            _id: req.params.id,
+            user: req.user._id
+        })
+        if (!website) {
+            return res.status(400).json({ message: "Website not Found!" })
+        }
+
+        return res.status(200).json(website)
+
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            message: error.message,
+            stack: error.stack
+        })
+
+    }
+
 }
