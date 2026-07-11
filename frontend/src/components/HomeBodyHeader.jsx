@@ -76,7 +76,7 @@ function HomeBodyHeader() {
         {/* Center title */}
         <h1
           className="
-            relative right-12
+            relative right-0
             text-3xl font-serif
             font-semibold
             text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-blue-600 to-purple-700

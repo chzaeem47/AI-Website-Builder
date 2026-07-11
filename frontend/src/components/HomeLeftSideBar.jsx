@@ -44,7 +44,7 @@ function HomeLeftSideBar() {
       className="
         absolute
         left-5
-        top-5
+        top-2
         bottom-5
         w-[105px]
         flex
