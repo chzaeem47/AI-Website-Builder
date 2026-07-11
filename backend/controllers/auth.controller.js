@@ -115,17 +115,20 @@ export const signup = async (req, res) => {
   }
 };
 
-export const logout = async(req,res)=>{
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    });
 
-    try{
-        return res.clearCookie("token",{
-            httpOnly:true,
-            secure:false,
-            sameSite:"strict",
-        })
-    }catch(e){
-        return res.status(500).json({
-            message : `Logout Error ${e}`
-        })
-    }
-}
+    return res.status(200).json({
+      message: "Logout successful",
+    });
+  } catch (e) {
+    return res.status(500).json({
+      message: `Logout Error ${e.message}`,
+    });
+  }
+};

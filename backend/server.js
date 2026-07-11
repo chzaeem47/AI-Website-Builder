@@ -5,6 +5,7 @@ import { connectDB } from "./db/db.js";
 import authRouter from './routers/auth.route.js'
 import cookieParser from "cookie-parser";
 import cors from 'cors'
+import userRouter from "./routers/user.route.js";
 
 
 const port = process.env.PORT || 5000
@@ -24,6 +25,7 @@ app.use(cors({
 * API MIDDLEWARE
 */
 app.use('/api/auth',authRouter)
+app.use('/api/user',userRouter)
 app.listen(port,()=>{
 
     console.log("Server is Running on Port ",port)

@@ -6,11 +6,15 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
+import Home from './pages/home.jsx';
+import getCurrUser from './hooks/getCurrUser.jsx';
 export const serverURL="http://localhost:3000"
 
 
 function App() {
 
+  getCurrUser()
+  
   return (
     
     <>
@@ -21,6 +25,7 @@ function App() {
 
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<Singup/>}/>
+        <Route path='/' element={<Home/>} />
 
 
     </Routes>

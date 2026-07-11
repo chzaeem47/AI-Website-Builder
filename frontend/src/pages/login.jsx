@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import HomeLeft from '../components/HomeLeft.jsx'
+import HomeLeft from '../components/LoginLeft.jsx'
 import { FaSun, FaMoon } from "react-icons/fa";
 
 function Login() {

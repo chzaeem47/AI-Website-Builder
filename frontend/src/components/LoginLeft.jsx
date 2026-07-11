@@ -6,9 +6,12 @@ import { auth, provider } from '../features/firebase.js';
 import { serverURL } from '../App.jsx';
 import axios from 'axios'
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '../redux/userSlice.js';
 
 function HomeLeft({dark}) {
 
+const dispatch = useDispatch()
 const authGoogle = async()=>{
   try{
     const result = await signInWithPopup(auth,provider)
@@ -20,8 +23,10 @@ const authGoogle = async()=>{
       avatar:result.user.photoURL
 
     },{withCredentials:true})
+    
+    dispatch(setUserData(data.user))
 
-    console.log(data)
+    navigate("/");
    
   }catch(e){
     console.log(e)
@@ -46,11 +51,11 @@ const login = async(e)=>{
     email,password
   },{withCredentials:true})
 
-  console.log(data)
+dispatch(setUserData(data.user));
   
   toast.success("Login Succesfully or SignUp First",{
     position:'top-left',
-    autoClose:2000,
+    autoClose:700,
     style:{
       width: "400px",
       minHeight: "80px",
@@ -70,7 +75,6 @@ const login = async(e)=>{
     const errMsg = error.response?.data?.message || "Login failed";
     seterror(errMsg);
           
-    toast.error(errMsg);
     
   } finally {
       setloading(false);
@@ -92,13 +96,13 @@ const login = async(e)=>{
       <form className="w-full max-w-[420px] flex flex-col gap-4 relative top-50 left-30" onSubmit={login}>
 
         <input type="text" placeholder="Email" value={email} onChange={(e)=>setemail(e.target.value)}
-        className={`w-150 h-18 px-5 rounded-xl border border-purple-200 text-sm outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
-        text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white" : "bg-white text-black"}`}
+        className={`w-150 h-18 px-5 rounded-xl text-sm outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}
         />
         
         <input type="password" placeholder="Password" value={password} onChange={(e)=>setpassword(e.target.value)}
-        className={`w-150 h-18 px-5 rounded-xl border border-purple-200 text-sm outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
-        text-[25px] ${dark ? "bg-gray-800 text-white placeholder-white" : "bg-white text-black"}`}
+        className={`w-150 h-18 px-5 rounded-xl text-sm outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        text-[25px] ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}
         />
 
         <div className="text-right relative left-44">
@@ -127,8 +131,8 @@ const login = async(e)=>{
 
 
       {/**LOGIN WITH GOOGLE BUTTOn */}
-      <button type="button" className={`w-150 h-16 rounded-xl border border-gray-300 text-[25px] font-medium flex items-center justify-center gap-4 hover:bg-gray-50 transition
-      font-serif items-center relative top-60 left-30 ${dark ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+      <button type="button" className={`w-150 h-16 rounded-xl text-[25px] font-medium flex items-center justify-center gap-4 hover:bg-gray-50 transition
+      font-serif items-center relative top-60 left-30 ${dark ? "bg-gray-800 text-white border border-black" : "bg-white text-black  border border-gray-300"}`}
       onClick={authGoogle}><FcGoogle size={38}/>Continue with Google</button>
 
 

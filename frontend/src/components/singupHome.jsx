@@ -22,7 +22,7 @@ const authGoogle = async()=>{
 
     },{withCredentials:true})
 
-    console.log(data)
+    console.log(data.user)
     
   }catch(e){
     console.log(e)
@@ -98,17 +98,17 @@ const signUp = async(e)=>{
       <form className="w-full max-w-[420px] flex flex-col gap-4 relative top-50 left-30" onSubmit={signUp}>
 
         <input type="text" placeholder='Name' value={name} onChange={(e)=>setname(e.target.value)} 
-        className={`w-150 h-18 px-5 rounded-xl border border-purple-200 outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
-        text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white" : "bg-white text-black"}`}/>
+        className={`w-150 h-18 px-5 rounded-xl outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}/>
         
         <input type="text" placeholder="Email" value={email} onChange={(e)=>setemail(e.target.value)}
-        className={`w-150 h-18 px-5 rounded-xl border border-purple-200 outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
-        text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white" : "bg-white text-black"}`}
+        className={`w-150 h-18 px-5 rounded-xl  outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}
         />
         
         <input type="password" placeholder="Password" value={password} onChange={(e)=>setpassword(e.target.value)}
-        className={`w-150 h-18 px-5 rounded-xl border border-purple-200 text-sm outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
-        text-[25px] ${dark ? "bg-gray-800 text-white placeholder-white" : "bg-white text-black"}`}
+        className={`w-150 h-18 px-5 rounded-xl text-sm outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        text-[25px] ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}
         />
 
         <div className="text-right relative left-44">
@@ -136,8 +136,8 @@ const signUp = async(e)=>{
 
 
       {/**LOGIN WITH GOOGLE BUTTOn */}
-     <button type="button" className={`w-150 h-16 rounded-xl border border-gray-300 text-[25px] font-medium flex items-center justify-center gap-4 hover:bg-gray-50 transition
-      font-serif items-center relative top-60 left-30 ${dark ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+     <button type="button" className={`w-150 h-16 rounded-xl text-[25px] font-medium flex items-center justify-center gap-4 hover:bg-gray-50 transition
+      font-serif items-center relative top-60 left-30 ${dark ? "bg-gray-800 text-white border border-black" : "bg-white text-black border border-gray-300"}`}
       onClick={authGoogle}><FcGoogle size={38}/>Continue with Google</button>
 
 

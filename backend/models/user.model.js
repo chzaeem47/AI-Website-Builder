@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         unique:true,
     },
     password:{
-        required:true,
+        
         type:String,
         maxlength: [128, 'Password cannot exceed 128 characters'], 
         minlength: [8, 'Password must be at least 8 characters long']
@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
     },
     plan:{
         type:String,
-        enum:["Free","Pro","Buisness"],
+        enum:["Free","Pro","Business"],
         default:"Free",
     }
 
