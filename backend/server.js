@@ -2,10 +2,10 @@ import express from "express"
 import dotenv from "dotenv";
 dotenv.config()
 import { connectDB } from "./db/db.js";
-import authRouter from './routers/auth.route.js'
+import authRouter from './src/routers/auth.route.js'
 import cookieParser from "cookie-parser";
 import cors from 'cors'
-import userRouter from "./routers/user.route.js";
+import userRouter from "./src/routers/user.route.js";
 
 
 const port = process.env.PORT || 5000
