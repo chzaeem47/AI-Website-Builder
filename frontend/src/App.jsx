@@ -11,6 +11,7 @@ import getCurrUser from './hooks/getCurrUser.jsx';
 import EditorPage from './pages/EditorPage.jsx';
 import Dashboard from "./pages/Dashboard.jsx";
 import LiveSite from './pages/LiveSite.jsx';
+import Pricing from './pages/Pricing.jsx';
 export const serverURL="http://localhost:3000"
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/editor/:id" element={<EditorPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/site/:slug" element={<LiveSite/>} />
+        <Route path='/pricing' element={<Pricing/>} />
 
     </Routes>
     

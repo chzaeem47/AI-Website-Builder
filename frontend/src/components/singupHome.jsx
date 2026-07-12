@@ -117,7 +117,7 @@ const signUp = async(e)=>{
           </button>
         </div>
 
-         <button type="submit" disabled={loading} className={`mt-2 h-16 rounded-xl
+         <button type="submit" disabled={loading} className={`mt-2 h-16 rounded-xl transition duration-300 hover:scale-105 cursor-pointer
         text-[26px] font-serif w-150 ${dark ? "bg-purple-800 text-white" : "bg-black text-white"}`}>
           {loading ? "SigningUp" : "SignUp"}
         </button>
@@ -136,7 +136,7 @@ const signUp = async(e)=>{
 
 
       {/**LOGIN WITH GOOGLE BUTTOn */}
-     <button type="button" className={`w-150 h-16 rounded-xl text-[25px] font-medium flex items-center justify-center gap-4 hover:bg-gray-50 transition
+     <button type="button" className={`w-150 h-16 rounded-xl text-[25px] font-medium flex items-center justify-center gap-4 transition duration-300 hover:scale-105 cursor-pointer
       font-serif items-center relative top-60 left-30 ${dark ? "bg-gray-800 text-white border border-black" : "bg-white text-black border border-gray-300"}`}
       onClick={authGoogle}><FcGoogle size={38}/>Continue with Google</button>
 
