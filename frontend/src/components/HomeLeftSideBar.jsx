@@ -12,7 +12,7 @@ import { LuLayoutGrid } from "react-icons/lu";
 import { FcBiotech } from "react-icons/fc";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
-import { FaWhatsapp } from "react-icons/fa6";
+import { BiDollar } from "react-icons/bi";  
 
 function HomeLeftSideBar() {
   const navigate = useNavigate();
@@ -22,9 +22,10 @@ function HomeLeftSideBar() {
   const menuItems = [
     { id: 1, icon: <FiHome />, label: "Home", path: "/dashboard" },
     { id: 2, icon: <FiClock />, label: "History", path: "/dashboard" },
-    { id: 3, icon: <SiGithub />, label: "GitHub", path: "#" },
-    { id: 4, icon: <FaLinkedin />, label: "LinkedInts", path: "#" },
-    { id: 5, icon: <FaWhatsapp />, label: "Search", path: "#" },
+    { id: 3, icon: <BiDollar />, label: "Pricing", path: "/pricing" },
+    { id: 4, icon: <SiGithub />, label: "GitHub", path: "https://github.com/chzaeem47" },
+    { id: 5, icon: <FaLinkedin />, label: "LinkedInts", path: "https://www.linkedin.com/in/muhammad-zaeem-ahmad-06a5a0363/" },
+
   ];
 
   return (
