@@ -259,3 +259,124 @@ export const getWebsiteById = async (req, res) => {
     }
 
 }
+
+const updateMasterPrompt = `
+YOU ARE A PRINCIPAL FRONTEND ARCHITECT.
+I HAVE AN EXISTING HTML/JS/CSS CODE AND I NEED YOU TO UPDATE IT BASED ON A NEW REQUIREMENT.
+
+--------------------------------------------------
+USER REQUIREMENT:
+{USER_PROMPT}
+--------------------------------------------------
+
+--------------------------------------------------
+CURRENT CODE:
+{CURRENT_CODE}
+--------------------------------------------------
+
+Apply the updates carefully without breaking existing functionality unless requested.
+Maintain the responsive design, styling, and SPA structure.
+
+OUTPUT FORMAT (RAW JSON ONLY)
+--------------------------------------------------
+{
+  "message": "Short professional confirmation sentence about what was updated",
+  "code": "<FULL VALID HTML DOCUMENT INCLUDING PREVIOUS CODE AND NEW UPDATES>"
+}
+
+ABSOLUTE RULES
+--------------------------------------------------
+- RETURN RAW JSON ONLY
+- NO markdown
+- NO explanations
+- FORMAT MUST MATCH EXACTLY
+- IF FORMAT IS BROKEN → RESPONSE IS INVALID
+`;
+
+export const updateWebsite = async (req, res) => {
+    try {
+        const { websiteId, prompt, currentCode } = req.body;
+
+        if (!websiteId || !prompt || !currentCode) {
+            return res.status(400).json({ message: "Website ID, Prompt, and Current Code are required!" });
+        }
+
+        const user = await userModel.findById(req.user._id);
+        if (!user) {
+            return res.status(400).json({ message: "User Not Found!" });
+        }
+
+        if (user.credits < 5) {
+            return res.status(400).json({ message: "Not Enough Credits!" });
+        }
+
+        const website = await websiteModel.findOne({
+            _id: websiteId,
+            user: req.user._id
+        });
+
+        if (!website) {
+            return res.status(404).json({ message: "Website not found!" });
+        }
+
+        const finalPrompt = updateMasterPrompt
+            .replace("{USER_PROMPT}", prompt)
+            .replace("{CURRENT_CODE}", currentCode);
+
+        let raw = "";
+        let parsed = null;
+
+        for (let i = 0; i < 2 && !parsed; i++) {
+            raw = await generateResponse(finalPrompt);
+            parsed = await extractJson(raw);
+
+            if (!parsed) {
+                raw = await generateResponse(finalPrompt + "\n\nRETURN ONLY RAW JSON");
+                parsed = await extractJson(raw);
+            }
+        }
+
+        if (!parsed || !parsed.code) {
+            return res.status(500).json({ message: "AI failed to generate valid code format." });
+        }
+
+        // Update the website document
+        website.latestCode = parsed.code;
+        website.conversation.push(
+            { role: "User", content: prompt },
+            { role: "Ai", content: parsed.message }
+        );
+
+        await website.save();
+
+        user.credits = user.credits - 5;
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            updatedCode: parsed.code,
+            message: parsed.message,
+            remainingCredits: user.credits
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: `Update website error: ${error.message}`,
+            stack: error.stack
+        });
+    }
+};
+
+export const getAllWebsites = async (req, res) => {
+    try {
+
+        const websites = await websiteModel.find({ user: req.user._id })
+            .sort({ createdAt: -1 });
+            
+        return res.status(200).json(websites);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Error fetching projects" });
+    }
+};

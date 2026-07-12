@@ -50,7 +50,7 @@ const websiteSchema = new mongoose.Schema({
     slug:{
         type:String,
         unique:true
-    }
+    },
 
 },{timestamps:true})
 
