@@ -340,7 +340,6 @@ export const updateWebsite = async (req, res) => {
             return res.status(500).json({ message: "AI failed to generate valid code format." });
         }
 
-        // Update the website document
         website.latestCode = parsed.code;
         website.conversation.push(
             { role: "User", content: prompt },
@@ -373,10 +372,53 @@ export const getAllWebsites = async (req, res) => {
 
         const websites = await websiteModel.find({ user: req.user._id })
             .sort({ createdAt: -1 });
-            
+
         return res.status(200).json(websites);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Error fetching projects" });
+    }
+};
+
+export const deploy = async (req, res) => {
+
+    try {
+        const website = await websiteModel.findOne({
+            _id: req.params.id,
+            user: req.user._id
+        })
+
+        if (!website) {
+            return res.status(400).json({ message: "Website not Found!" })
+        }
+
+        if (!website.slug) {
+
+            website.slug = website.title.toLowerCase().replace(/[^a-z0-9]/g, "-").slice(0, 60)
+                + "-" + website._id.toString().slice(-5);
+        }
+
+        website.deployed = true;
+        website.deployURL = `${process.env.FRONTEND_URL}/site/${website.slug}`
+
+        await website.save()
+
+        return res.status(200).json({
+            url: website.deployURL
+        })
+
+    } catch (error) {
+        return res.status(500).json({ message: "Deploy Backend Error" });
+    }
+
+}
+
+export const getWebsiteBySlug = async (req, res) => {
+    try {
+        const website = await websiteModel.findOne({ slug: req.params.slug });
+        if (!website) return res.status(404).json({ message: "Site not found" });
+        return res.status(200).json(website);
+    } catch (error) {
+        return res.status(500).json({ message: "Error" });
     }
 };

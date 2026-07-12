@@ -10,6 +10,7 @@ import Home from './pages/home.jsx';
 import getCurrUser from './hooks/getCurrUser.jsx';
 import EditorPage from './pages/EditorPage.jsx';
 import Dashboard from "./pages/Dashboard.jsx";
+import LiveSite from './pages/LiveSite.jsx';
 export const serverURL="http://localhost:3000"
 
 
@@ -30,6 +31,7 @@ function App() {
         <Route path='/' element={<Home/>} />
         <Route path="/editor/:id" element={<EditorPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/site/:slug" element={<LiveSite/>} />
 
     </Routes>
     
