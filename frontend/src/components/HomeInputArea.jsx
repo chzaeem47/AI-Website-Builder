@@ -5,6 +5,7 @@ import axios from 'axios';
 import { serverURL } from '../App.jsx';
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux"; // 1. Added import
 
 const loadingMessages = [
   "Initializing AI Architect",
@@ -16,7 +17,7 @@ const loadingMessages = [
   "Almost there, finalizing code"
 ];
 
-function HomeInputArea() {
+function HomeInputArea() { // 2. Removed prop
   const [prompt, setPrompt] = useState("");
   const [generatedId, setGeneratedId] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -27,6 +28,7 @@ function HomeInputArea() {
   const textareaRef = useRef(null);
   const abortControllerRef = useRef(null);
   const navigate = useNavigate();
+  const { darkMode } = useSelector((state) => state.user); // 3. Access global state
 
   // Handle auto-resizing of the textarea
   const handleInput = (e) => {
@@ -186,34 +188,79 @@ function HomeInputArea() {
         </div>
       )}
 
-      <div className="absolute bottom-8 left-0 right-0 flex justify-center px-6">
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center px-6 transition-all duration-300">
         <div className="w-full max-w-[850px]">
           {generatedId && !isGenerating && (
-            <div className="mb-4 flex items-center justify-between rounded-2xl border border-white/50 bg-white/60 px-6 py-3 backdrop-blur-xl shadow-lg">
-              <span className="font-serif text-xl text-gray-900">Your website is ready!</span>
-              <button onClick={() => navigate(`/editor/${generatedId}`)} className="font-serif rounded-xl bg-indigo-600 px-6 py-2 text-white hover:bg-indigo-700">
+            <div
+              className={`mb-4 flex items-center justify-between rounded-2xl border px-6 py-3 backdrop-blur-xl transition-all duration-300 ${
+                darkMode
+                  ? "border-gray-700 bg-[#1e1e2e]/90 shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
+                  : "border-white/50 bg-white/60 shadow-lg"
+              }`}
+            >
+              <span
+                className={`font-serif text-xl ${
+                  darkMode ? "text-gray-200" : "text-gray-900"
+                }`}
+              >
+                Your website is ready!
+              </span>
+              <button
+                onClick={() => navigate(`/editor/${generatedId}`)}
+                className={`font-serif rounded-xl px-6 py-2 text-white transition-colors duration-300 ${
+                  darkMode
+                    ? "bg-indigo-500 hover:bg-indigo-600"
+                    : "bg-indigo-600 hover:bg-indigo-700"
+                }`}
+              >
                 Open Editor
               </button>
             </div>
           )}
 
-          <form onSubmit={handleGenerateWebsite} className="flex items-end gap-3 rounded-3xl border border-white/50 bg-white/60 p-4 backdrop-blur-xl shadow-xl">
+          <form
+            onSubmit={handleGenerateWebsite}
+            className={`flex items-end gap-3 rounded-3xl border p-4 backdrop-blur-xl transition-all duration-300 ${
+              darkMode
+                ? "border-gray-700 bg-[#1e1e2e]/90 shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
+                : "border-white/50 bg-white/60 shadow-xl"
+            }`}
+          >
             <textarea
               ref={textareaRef}
               value={prompt}
               onChange={handleInput}
               placeholder="Create your dream website"
-              className="w-full bg-transparent p-1 font-serif text-[25px] text-gray-900 placeholder:text-gray-500 outline-none resize-none overflow-y-auto max-h-[200px] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              className={`w-full bg-transparent p-1 font-serif text-[25px] outline-none resize-none overflow-y-auto max-h-[200px] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden transition-colors duration-300 ${
+                darkMode
+                  ? "text-gray-200 placeholder:text-gray-500"
+                  : "text-gray-900 placeholder:text-gray-500"
+              }`}
               rows={1}
             />
-            <button type="submit" className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg hover:scale-105 transition-transform shrink-0">
+            <button
+              type="submit"
+              className={`flex h-12 w-12 items-center justify-center rounded-full text-white hover:scale-105 transition-all duration-300 shrink-0 ${
+                darkMode
+                  ? "bg-indigo-500 shadow-[0_4px_12px_rgba(99,102,241,0.4)]"
+                  : "bg-indigo-600 shadow-lg"
+              }`}
+            >
               <FiSend size={24} />
             </button>
           </form>
 
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             {categories.map((cat) => (
-              <button key={cat.id} onClick={() => setPrompt(`${cat.name}: `)} className="flex items-center gap-2 rounded-full border border-white/50 bg-white/60 px-5 py-2 font-serif text-gray-900 shadow-md backdrop-blur-md hover:bg-white/80 transition-all">
+              <button
+                key={cat.id}
+                onClick={() => setPrompt(`${cat.name}: `)}
+                className={`flex items-center gap-2 rounded-full border px-5 py-2 font-serif backdrop-blur-md transition-all duration-300 ${
+                  darkMode
+                    ? "border-gray-700 bg-[#1e1e2e]/80 text-gray-300 shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:bg-[#2a2a3c]"
+                    : "border-white/50 bg-white/60 text-gray-900 shadow-md hover:bg-white/80"
+                }`}
+              >
                 {cat.icon} {cat.name}
               </button>
             ))}

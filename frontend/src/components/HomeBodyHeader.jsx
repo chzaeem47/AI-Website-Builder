@@ -10,7 +10,7 @@ import axios from "axios";
 import { setUserData } from "../redux/userSlice.js";
 
 function HomeBodyHeader() {
-  const { userData } = useSelector((state) => state.user);
+  const { userData, darkMode } = useSelector((state) => state.user);
   const isLoggedIn = Boolean(userData?._id);
 
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function HomeBodyHeader() {
 
   return (
     <div
-      className="
+      className={`
         absolute
         top-4
         left-[120px]
@@ -39,34 +39,39 @@ function HomeBodyHeader() {
         bottom-4
         rounded-[28px]
         overflow-hidden
-        bg-[url('./home-light-bg.jpeg')]
         bg-center
         bg-no-repeat
         bg-cover
-      "
+        transition-all
+        duration-300
+        ${
+          darkMode
+            ? "bg-[#111827] bg-none shadow-[inset_0_0_50px_rgba(0,0,0,0.5)] border border-gray-800"
+            : "bg-[url('./home-light-bg.jpeg')]"
+        }
+      `}
     >
       <div className="relative flex items-center justify-between px-5 pt-4">
         {/* Left model selector */}
         <button
           type="button"
-          className="
+          className={`
             flex
             items-center
             gap-2
             h-[46px]
             px-4
             rounded-xl
-            bg-white/95
-            border
-            border-white
-            shadow-[0_8px_22px_rgba(70,75,110,0.16)]
             backdrop-blur-md
-            text-gray-900
-            hover:shadow-[0_10px_26px_rgba(70,75,110,0.22)]
-            hover:-translate-y-0.5
             transition-all
             duration-300
-          "
+            hover:-translate-y-0.5
+            ${
+              darkMode
+                ? "bg-[#1e1e2e]/80 border border-gray-600 text-gray-200 shadow-[0_8px_22px_rgba(0,0,0,0.4)] hover:shadow-[0_10px_26px_rgba(0,0,0,0.5)]"
+                : "bg-white/95 border border-white text-gray-900 shadow-[0_8px_22px_rgba(70,75,110,0.16)] hover:shadow-[0_10px_26px_rgba(70,75,110,0.22)]"
+            }
+          `}
         >
           <span className="text-[20px] font-medium font-serif whitespace-nowrap">
             Quantum 3.5 Pro
@@ -90,46 +95,48 @@ function HomeBodyHeader() {
           <div className="flex items-center gap-3">
             <Link
               to="/login"
-              className="
+              className={`
                 h-[46px]
                 px-5
                 rounded-xl
-                bg-[#071426]
-                text-white
                 text-[25px] font-serif
                 font-medium
                 flex
                 items-center
                 justify-center
-                shadow-[0_8px_20px_rgba(7,20,38,0.24)]
                 hover:scale-105
                 transition-all
                 duration-300
-              "
+                ${
+                  darkMode
+                    ? "bg-purple-600 text-white shadow-[0_8px_20px_rgba(147,51,234,0.3)]"
+                    : "bg-[#071426] text-white shadow-[0_8px_20px_rgba(7,20,38,0.24)]"
+                }
+              `}
             >
               Login
             </Link>
 
             <Link
               to="/signup"
-              className="
+              className={`
                 h-[46px]
                 px-5
                 rounded-xl
-                bg-white
-                border
-                border-gray-200
-                text-gray-800
                 text-[25px] font-serif
                 font-medium
                 flex
                 items-center
                 justify-center
-                shadow-[0_8px_20px_rgba(70,75,110,0.14)]
                 hover:scale-105
                 transition-all
                 duration-300
-              "
+                ${
+                  darkMode
+                    ? "bg-[#1e1e2e] border border-gray-700 text-gray-200 shadow-[0_8px_20px_rgba(0,0,0,0.3)]"
+                    : "bg-white border border-gray-200 text-gray-800 shadow-[0_8px_20px_rgba(70,75,110,0.14)]"
+                }
+              `}
             >
               SignUp
             </Link>
@@ -138,17 +145,22 @@ function HomeBodyHeader() {
           <div className="relative">
             <div className="p-[2px] rounded-2xl bg-gradient-to-r from-purple-600 via-violet-500 to-blue-500">
               <div
-                className="
+                className={`
                   min-w-[245px]
                   h-15
                   px-3
                   rounded-xl
-                  bg-white/50
-                  shadow-[0_8px_20px_rgba(7,20,38,0.24)]
                   flex
                   items-center
                   gap-3
-                "
+                  transition-colors
+                  duration-300
+                  ${
+                    darkMode
+                      ? "bg-[#111827]/80 shadow-[0_8px_20px_rgba(0,0,0,0.4)]"
+                      : "bg-white/50 shadow-[0_8px_20px_rgba(7,20,38,0.24)]"
+                  }
+                `}
               >
                 {userData?.avatar ? (
                   <img
@@ -176,7 +188,11 @@ function HomeBodyHeader() {
                     {userData?.name}
                   </h2>
 
-                  <p className="text-black text-[14px] font-sans relative bottom-1">
+                  <p
+                    className={`text-[14px] font-sans relative bottom-1 ${
+                      darkMode ? "text-gray-300" : "text-black"
+                    }`}
+                  >
                     Credits: {userData?.credits}
                   </p>
                 </div>
@@ -198,19 +214,22 @@ function HomeBodyHeader() {
 
             {dropdown && (
               <div
-                className="
+                className={`
                   absolute
                   right-0
                   top-[68px]
                   w-[150px]
                   p-2
                   rounded-xl
-                  bg-white
-                  border
-                  border-purple-200
-                  shadow-[0_8px_20px_rgba(7,20,38,0.18)]
                   z-50
-                "
+                  transition-all
+                  duration-300
+                  ${
+                    darkMode
+                      ? "bg-[#1e1e2e] border border-gray-700 shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
+                      : "bg-white border border-purple-200 shadow-[0_8px_20px_rgba(7,20,38,0.18)]"
+                  }
+                `}
               >
                 <button
                   type="button"

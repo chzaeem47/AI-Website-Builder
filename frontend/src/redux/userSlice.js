@@ -1,18 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const userSlice = createSlice({
-    name:"User",
-    initialState:{
-        userData:null,
+  name: "user",
+  initialState: {
+    userData: null,
+    darkMode: false, 
+  },
+  reducers: {
+    setUserData: (state, action) => {
+      state.userData = action.payload;
     },
+    
+    toggleTheme: (state) => {
+      state.darkMode = !state.darkMode;
+    },
+  },
+});
 
-    reducers:{
-        setUserData:(state,action)=>{
-            state.userData = action.payload
-        }
-    }
-})
-
-export const {setUserData} = userSlice.actions
-export default userSlice.reducer
+export const { setUserData, toggleTheme } = userSlice.actions;
+export default userSlice.reducer;

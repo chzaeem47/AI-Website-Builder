@@ -3,11 +3,8 @@ import { useSelector } from "react-redux";
 import Strands from "./Strands";
 
 function HomeMainBody() {
-  const { userData } = useSelector(
-    (state) => state.user
-  );
+  const { userData, darkMode } = useSelector((state) => state.user);
   
-
   const firstName =
     userData?.name?.trim().split(" ")[0] ||
     "there";
@@ -32,8 +29,9 @@ function HomeMainBody() {
           -translate-x-1/2
           -translate-y-1/2
           w-[750px]
-          h-[350px]
+          h-[300px]
           pointer-events-none
+          overflow-visible
         "
       >
         <Strands
@@ -54,31 +52,40 @@ function HomeMainBody() {
           saturation={1.5}
           opacity={0.85}
           scale={2.5}
+          // The background color matches your theme to eliminate the boundary box
+          // without using blend modes that distort colors.
+          backgroundColor={darkMode ? "#0d1117" : "#ffffff"}
         />
       </div>
 
       {/* Greeting */}
       <h1
-        className="
+        className={`
           absolute
           left-1/2
           top-35
           z-10
           -translate-x-1/2
-          text-black
           text-5xl
           font-semibold
           font-serif
           leading-16
           text-center
           whitespace-nowrap
-        "
+          transition-colors
+          duration-300
+          ${darkMode ? "text-white" : "text-black"}
+        `}
       >
         <span>
           Hi {firstName},{" "}
         </span>
 
-        <span className="text-gray-600">
+        <span 
+          className={`transition-colors duration-300 ${
+            darkMode ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           Ready to
           <br />
           Achieve Great Things?

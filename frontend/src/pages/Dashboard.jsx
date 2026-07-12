@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux"; // 1. Added import
 import { serverURL } from "../App.jsx";
 import { FiFolder, FiExternalLink, FiPlus, FiClock } from "react-icons/fi";
 
@@ -9,6 +10,7 @@ function Dashboard() {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const [deployingId, setDeployingId] = useState(null);
+    const { darkMode } = useSelector((state) => state.user); // 2. Access global state
 
     useEffect(() => {
         const fetchAll = async () => {
@@ -25,7 +27,11 @@ function Dashboard() {
     }, []);
 
     return (
-        <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-[#c7d2fe] via-[#f0abfc]/40 to-[#a5f3fc]">
+        <div className={`relative h-screen w-full overflow-hidden transition-colors duration-300 ${
+            darkMode 
+                ? "bg-[#0a0a0a]" 
+                : "bg-gradient-to-br from-[#c7d2fe] via-[#f0abfc]/40 to-[#a5f3fc]"
+        }`}>
             <style>{`
         @keyframes meshFloatA { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(30px,-20px) scale(1.15)} }
         @keyframes meshFloatB { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-25px,25px) scale(0.9)} }
@@ -41,27 +47,34 @@ function Dashboard() {
         .dash-scroll { scrollbar-width: thin; scrollbar-color: #a855f7 transparent; }
       `}</style>
 
-
-            {/* Ambient gradient mesh — fixed so it stays put while content scrolls */}
+            {/* Ambient gradient mesh */}
             <div className="pointer-events-none fixed inset-0 overflow-hidden">
-                <div className="absolute -top-24 -left-20 w-[460px] h-[460px] rounded-full bg-pink-400/40 blur-3xl" style={{ animation: "meshFloatA 10s ease-in-out infinite" }} />
-                <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-indigo-400/40 blur-3xl" style={{ animation: "meshFloatB 12s ease-in-out infinite" }} />
-                <div className="absolute top-[30%] right-[10%] w-[340px] h-[340px] rounded-full bg-cyan-300/35 blur-3xl" style={{ animation: "meshFloatA 9s ease-in-out infinite reverse" }} />
-                <div className="absolute bottom-[10%] left-[20%] w-[300px] h-[300px] rounded-full bg-amber-300/30 blur-3xl" style={{ animation: "meshFloatB 11s ease-in-out infinite reverse" }} />
-                <div className="absolute top-[55%] left-[45%] w-[280px] h-[280px] rounded-full bg-fuchsia-300/30 blur-3xl" style={{ animation: "meshFloatA 13s ease-in-out infinite" }} />
+                <div className={`absolute -top-24 -left-20 w-[460px] h-[460px] rounded-full blur-3xl ${darkMode ? "bg-pink-900/20" : "bg-pink-400/40"}`} style={{ animation: "meshFloatA 10s ease-in-out infinite" }} />
+                <div className={`absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full blur-3xl ${darkMode ? "bg-indigo-900/20" : "bg-indigo-400/40"}`} style={{ animation: "meshFloatB 12s ease-in-out infinite" }} />
+                <div className={`absolute top-[30%] right-[10%] w-[340px] h-[340px] rounded-full blur-3xl ${darkMode ? "bg-cyan-900/15" : "bg-cyan-300/35"}`} style={{ animation: "meshFloatA 9s ease-in-out infinite reverse" }} />
+                <div className={`absolute bottom-[10%] left-[20%] w-[300px] h-[300px] rounded-full blur-3xl ${darkMode ? "bg-amber-900/15" : "bg-amber-300/30"}`} style={{ animation: "meshFloatB 11s ease-in-out infinite reverse" }} />
+                <div className={`absolute top-[55%] left-[45%] w-[280px] h-[280px] rounded-full blur-3xl ${darkMode ? "bg-fuchsia-900/15" : "bg-fuchsia-300/30"}`} style={{ animation: "meshFloatA 13s ease-in-out infinite" }} />
             </div>
 
             {/* Scrollable content layer */}
             <div className="dash-scroll relative z-10 h-full w-full overflow-y-auto p-10">
-                <button className="bg-gradient-to-r from-pink-500 to-purple-500
-        text-[20px] font-serif w-20 rounded-3xl relative bottom-2" onClick={() => navigate('/')}>Back</button>
+                <button 
+                    className={`text-[20px] font-serif w-20 rounded-3xl relative bottom-2 transition-colors ${
+                        darkMode ? "bg-gray-800 text-gray-200 hover:bg-gray-700" : "bg-gradient-to-r from-pink-500 to-purple-500 text-white"
+                    }`} 
+                    onClick={() => navigate('/')}
+                >
+                    Back
+                </button>
                 <div className="max-w-6xl mx-auto">
                     <header className="flex justify-between items-center mb-12">
                         <div>
-                            <h1 className="text-4xl font-serif font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+                            <h1 className={`text-4xl font-serif font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${
+                                darkMode ? "from-pink-400 via-purple-400 to-indigo-400" : "from-pink-500 via-purple-500 to-indigo-500"
+                            }`}>
                                 My Projects
                             </h1>
-                            <p className="mt-1.5 text-sm text-gray-600">
+                            <p className={`mt-1.5 text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
                                 {loading ? "Loading your workspace…" : `${websites.length} project${websites.length === 1 ? "" : "s"} in your workspace`}
                             </p>
                         </div>
@@ -74,7 +87,9 @@ function Dashboard() {
                     </header>
 
                     {loading ? (
-                        <div className="flex flex-col items-center justify-center gap-6 rounded-[2rem] border border-white/50 bg-white/40 py-24 backdrop-blur-xl">
+                        <div className={`flex flex-col items-center justify-center gap-6 rounded-[2rem] border py-24 backdrop-blur-xl ${
+                            darkMode ? "border-gray-800 bg-[#1e1e2e]/60" : "border-white/50 bg-white/40"
+                        }`}>
                             <div className="relative w-14 h-14">
                                 <div
                                     className="absolute inset-0 rounded-full"
@@ -95,15 +110,17 @@ function Dashboard() {
                                     }}
                                 />
                             </div>
-                            <p className="font-serif text-gray-600">Loading your projects...</p>
+                            <p className={`font-serif ${darkMode ? "text-gray-300" : "text-gray-600"}`}>Loading your projects...</p>
                         </div>
                     ) : websites.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] border border-white/50 bg-white/40 py-24 backdrop-blur-xl text-center">
+                        <div className={`flex flex-col items-center justify-center gap-4 rounded-[2rem] border py-24 backdrop-blur-xl text-center ${
+                            darkMode ? "border-gray-800 bg-[#1e1e2e]/60" : "border-white/50 bg-white/40"
+                        }`}>
                             <div className="flex h-20 w-20 items-center justify-center rounded-full text-white shadow-lg" style={{ background: "conic-gradient(from 0deg,#ec4899,#a855f7,#6366f1,#22d3ee,#facc15,#ec4899)" }}>
                                 <FiFolder size={32} />
                             </div>
-                            <h3 className="font-serif text-xl font-semibold text-gray-800">No projects yet</h3>
-                            <p className="text-sm text-gray-500 max-w-xs">Start your first build and it'll show up here as a project card.</p>
+                            <h3 className={`font-serif text-xl font-semibold ${darkMode ? "text-gray-100" : "text-gray-800"}`}>No projects yet</h3>
+                            <p className={`text-sm max-w-xs ${darkMode ? "text-gray-400" : "text-gray-500"}`}>Start your first build and it'll show up here as a project card.</p>
                             <button
                                 onClick={() => navigate('/c')}
                                 className="mt-2 flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-2.5 text-sm font-medium text-white shadow-md transition-all hover:shadow-lg"
@@ -117,7 +134,11 @@ function Dashboard() {
                                 <div
                                     key={site._id}
                                     style={{ animation: `cardIn 0.4s ease ${index * 0.05}s both` }}
-                                    className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/50 p-6 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-purple-500/10"
+                                    className={`group relative overflow-hidden rounded-2xl border p-6 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 ${
+                                        darkMode 
+                                            ? "border-gray-700 bg-[#1e1e2e]/70 hover:shadow-2xl hover:shadow-purple-900/20" 
+                                            : "border-white/60 bg-white/50 hover:shadow-2xl hover:shadow-purple-500/10"
+                                    }`}
                                 >
                                     <div className="pointer-events-none absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br from-pink-400/0 to-indigo-400/0 blur-2xl transition-all duration-500 group-hover:from-pink-400/30 group-hover:to-indigo-400/30" />
 
@@ -130,22 +151,25 @@ function Dashboard() {
                                         </div>
                                     </div>
 
-                                    <h3 className="relative font-serif font-semibold text-gray-800 text-lg mb-1 truncate">{site.title}</h3>
-                                    <div className="relative flex items-center gap-1.5 text-gray-400 text-xs mb-6">
+                                    <h3 className={`relative font-serif font-semibold text-lg mb-1 truncate ${darkMode ? "text-gray-100" : "text-gray-800"}`}>{site.title}</h3>
+                                    <div className={`relative flex items-center gap-1.5 text-xs mb-6 ${darkMode ? "text-gray-500" : "text-gray-400"}`}>
                                         <FiClock size={12} /> {new Date(site.createdAt).toLocaleDateString()}
                                     </div>
 
                                     <div className="relative flex gap-2">
                                         <button
                                             onClick={() => navigate(`/editor/${site._id}`)}
-                                            className="flex-1 rounded-full border border-white/70 bg-white/80 text-gray-700 py-2 text-sm font-medium shadow-sm transition-all hover:bg-white hover:shadow-md"
+                                            className={`flex-1 rounded-full border py-2 text-sm font-medium shadow-sm transition-all ${
+                                                darkMode 
+                                                    ? "border-gray-600 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:shadow-md" 
+                                                    : "border-white/70 bg-white/80 text-gray-700 hover:bg-white hover:shadow-md"
+                                            }`}
                                         >
                                             Edit
                                         </button>
                                         <button
                                             disabled={deployingId === site._id}
                                             onClick={async () => {
-
                                                 if (site.deployed) {
                                                     navigator.clipboard.writeText(site.deployURL);
                                                     alert("URL copied to clipboard!");
@@ -159,7 +183,6 @@ function Dashboard() {
                                                     });
 
                                                     if (res.data.url) {
-                                                        
                                                         site.deployed = true;
                                                         site.deployURL = res.data.url;
                                                         window.open(res.data.url, '_blank');
@@ -172,9 +195,9 @@ function Dashboard() {
                                                 }
                                             }}
                                             className={`flex-1 rounded-full py-2 text-sm font-medium shadow-md transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${site.deployed
-                                                    ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white"
-                                                    : "bg-gradient-to-r from-pink-500 to-purple-600 text-white"
-                                                }`}
+                                                ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white"
+                                                : "bg-gradient-to-r from-pink-500 to-purple-600 text-white"
+                                            }`}
                                         >
                                             {deployingId === site._id ? (
                                                 "Deploying..."
