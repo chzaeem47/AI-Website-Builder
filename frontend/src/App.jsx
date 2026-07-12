@@ -12,7 +12,7 @@ import EditorPage from './pages/EditorPage.jsx';
 import Dashboard from "./pages/Dashboard.jsx";
 import LiveSite from './pages/LiveSite.jsx';
 import Pricing from './pages/Pricing.jsx';
-export const serverURL="http://localhost:3000"
+export const serverURL="https://ai-website-builder-tan.vercel.app"
 
 
 function App() {
