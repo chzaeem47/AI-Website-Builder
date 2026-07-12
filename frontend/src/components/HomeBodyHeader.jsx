@@ -47,7 +47,7 @@ function HomeBodyHeader() {
         ${
           darkMode
             ? "bg-[#111827] bg-none shadow-[inset_0_0_50px_rgba(0,0,0,0.5)] border border-gray-800"
-            : "bg-[url('./home-light-bg.jpeg')]"
+            : "bg-[url('/home-light-bg.jpeg')]"
         }
       `}
     >
