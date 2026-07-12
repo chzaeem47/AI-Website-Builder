@@ -12,7 +12,7 @@ function EditorPage() {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState("preview");
-  const { darkMode } = useSelector((state) => state.user); // 2. Access global state
+  const { darkMode } = useSelector((state) => state.user); 
 
   const [messages, setMessages] = useState([{ role: "ai", text: "How can I help you update this project?" }]);
   const [input, setInput] = useState("");
