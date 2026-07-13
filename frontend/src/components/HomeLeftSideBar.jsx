@@ -6,13 +6,13 @@ import {
   FiHome,
   FiClock,
   FiSun,
-  FiMoon
+  FiMoon,
 } from "react-icons/fi";
 import { LuLayoutGrid } from "react-icons/lu";
 import { FcBiotech } from "react-icons/fc";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
-import { BiDollar } from "react-icons/bi";  
+import { BiDollar } from "react-icons/bi";
 
 function HomeLeftSideBar() {
   const navigate = useNavigate();
@@ -23,10 +23,27 @@ function HomeLeftSideBar() {
     { id: 1, icon: <FiHome />, label: "Home", path: "/dashboard" },
     { id: 2, icon: <FiClock />, label: "History", path: "/dashboard" },
     { id: 3, icon: <BiDollar />, label: "Pricing", path: "/pricing" },
-    { id: 4, icon: <SiGithub />, label: "GitHub", path: "https://github.com/chzaeem47" },
-    { id: 5, icon: <FaLinkedin />, label: "LinkedInts", path: "https://www.linkedin.com/in/muhammad-zaeem-ahmad-06a5a0363/" },
-
+    {
+      id: 4,
+      icon: <SiGithub />,
+      label: "GitHub",
+      url: "https://github.com/chzaeem47",
+    },
+    {
+      id: 5,
+      icon: <FaLinkedin />,
+      label: "LinkedIn",
+      url: "https://www.linkedin.com/in/muhammad-zaeem-ahmad-06a5a0363/",
+    },
   ];
+
+  const handleNavigation = (item) => {
+    if (item.url) {
+      window.open(item.url, "_blank", "noopener,noreferrer");
+    } else if (item.path) {
+      navigate(item.path);
+    }
+  };
 
   return (
     <aside className="absolute left-5 top-2 bottom-5 w-[105px] flex flex-col items-center py-5 z-20">
@@ -49,7 +66,7 @@ function HomeLeftSideBar() {
             type="button"
             title={item.label}
             aria-label={item.label}
-            onClick={() => navigate(item.path)}
+            onClick={() => handleNavigation(item)}
             className={`
               group w-[58px] h-[58px] rounded-full flex items-center justify-center text-[25px] border transition-all duration-300
               ${

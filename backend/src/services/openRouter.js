@@ -2,7 +2,7 @@
 
 const openRouterURL = "https://openrouter.ai/api/v1/chat/completions";
 
-const model =  "deepseek/deepseek-chat-v3.1";
+const model =  "deepseek/deepseek-chat";
 
 const generateResponse = async (prompt) => {
 
