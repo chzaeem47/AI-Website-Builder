@@ -22,6 +22,15 @@ const authGoogle = async()=>{
 
     },{withCredentials:true})
 
+    toast.success("Signed in successfully with Google", {
+      position: "top-left",
+      autoClose: 2000,
+    });
+
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+
     console.log(data.user)
     
   }catch(e){

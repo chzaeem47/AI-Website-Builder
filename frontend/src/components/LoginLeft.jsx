@@ -26,6 +26,16 @@ const authGoogle = async()=>{
     
     dispatch(setUserData(data.user))
 
+    toast.success("Logged in successfully with Google", {
+      position: "top-left",
+      autoClose: 1000,
+      style: {
+        width: "400px",
+        minHeight: "80px",
+        fontSize: "18px",
+      },
+    });
+
     navigate("/");
    
   }catch(e){
