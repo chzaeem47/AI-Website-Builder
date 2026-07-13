@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SingupHome from '../components/singupHome.jsx'
-import HeroPanel from '../components/HeroPanel.jsx'
-import AmbientBackground from '../components/AmbientBackground.jsx'
+import HeroPanel from '../components/Heropanel.jsx'
+import AmbientBackground from '../components/Ambientbackground.jsx'
 import { FaMoon,FaSun } from 'react-icons/fa';
 
 function Singup() {

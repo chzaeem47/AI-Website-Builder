@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HomeLeft from '../components/LoginLeft.jsx'
-import HeroPanel from '../components/HeroPanel.jsx'
-import AmbientBackground from '../components/AmbientBackground.jsx'
+import HeroPanel from '../components/Heropanel.jsx'
+import AmbientBackground from '../components/Ambientbackground.jsx'
 import { FaSun, FaMoon } from "react-icons/fa";
 
 function Login() {

@@ -4,8 +4,6 @@ import Login from './pages/login.jsx'
 import Singup from './pages/singup.jsx'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
-import { FaSun, FaMoon } from "react-icons/fa";
 import Home from './pages/home.jsx';
 import getCurrUser from './hooks/getCurrUser.jsx';
 import EditorPage from './pages/EditorPage.jsx';
