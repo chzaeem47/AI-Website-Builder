@@ -381,83 +381,48 @@ Imagine this website is being judged by
 professional designers.
 
 It should be:
-
 Beautiful.
-
 Elegant.
-
 Premium.
-
 Creative.
-
 Highly polished.
-
 Award-worthy.
-
 NEVER produce a generic template.
-
 ALWAYS produce something visually impressive.
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 FINAL SELF CHECK
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 Before responding verify:
-
 ✔ Beautiful premium UI
-
 ✔ Stunning Hero
-
 ✔ Sticky Header
-
 ✔ Navigation Buttons
-
 ✔ Responsive
-
 ✔ Mobile Menu
-
 ✔ Premium Color Palette
-
 ✔ Great Typography
-
 ✔ Professional Spacing
-
 ✔ Working JavaScript
-
 ✔ Hover Effects
-
 ✔ Responsive Images
-
 ✔ Modern Footer
-
 ✔ No Placeholder Content
-
 ✔ No Broken Buttons
-
 ✔ No Horizontal Scroll
-
 ✔ Production Ready
-
 If any item fails,
 rewrite before responding.
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 OUTPUT FORMAT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 Return RAW JSON ONLY
-
 {
   "message":"Professional confirmation.",
   "code":"FULL HTML DOCUMENT"
 }
-
 NO Markdown.
-
 NO Explanations.
-
 NO Extra Text.
-
 ONLY VALID JSON.
 `;
 
