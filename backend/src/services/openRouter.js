@@ -2,7 +2,11 @@
 
 const openRouterURL = "https://openrouter.ai/api/v1/chat/completions";
 
-const model = "deepseek/deepseek-chat"
+const MODELS = [
+  "qwen/qwen3-coder:free",
+  "openai/gpt-oss-120b:free",
+  "poolside/laguna-m1:free"
+];
 
 const generateResponse = async (prompt) => {
 
@@ -17,14 +21,19 @@ const generateResponse = async (prompt) => {
             messages: [
                 {
                     role: 'system',
-                    content: 'You must return only valid RAW json'
+                    content: `Return ONLY valid JSON.
+                    Never use markdown.
+                    Never explain anything.
+                    The output must be directly parsable using JSON.parse().
+                    `,
                 },
                 {
                     role: 'user',
                     content: prompt,
                 },
             ],
-            temperature:0.2
+            temperature:0.8,
+            max_tokens: 32000
         }),
     });
 
