@@ -85,40 +85,41 @@ const signUp = async(e)=>{
 }
 
   return (
-    <div className='relative left-17'>
+    <div className='relative w-full flex flex-col justify-center px-6 items-center 
+    sm:px-10 md:px-14 lg:pl-16 xl:pl-24 py-12 lg:py-0 max-w-2xl mx-auto lg:mx-0'>
       
       {/*WELCOME BACK TEXT*/}
-      <div className='flex flex-col justify-between gap-3 relative top-35 left-26'>
-      <h1 className={`${dark ? "text-purple-500" : "text-black"} text-5xl font-semibold font-serif`}>Welcome Back!</h1>
-      <p className={`font-sans p-3 text-[18px] ${dark ? "text-white" : "text-black"}`}>Please enter login details below</p>
+      <div className='flex flex-col gap-3 mb-8 sm:mb-10'>
+      <h1 className={`${dark ? "text-purple-500" : "text-black"} text-3xl sm:text-4xl md:text-5xl relative top-10 font-semibold font-serif`}>Welcome Back!</h1>
+      <p className={`font-sans text-base relative top-8 left-3 sm:text-[18px] ${dark ? "text-white" : "text-black"}`}>Please enter login details below</p>
       </div>
 
       {/*LOGIN FORM*/}
 
-      <form className="w-full max-w-[420px] flex flex-col gap-4 relative top-50 left-30" onSubmit={signUp}>
+      <form className="w-full max-w-[420px] flex flex-col gap-4" onSubmit={signUp}>
 
         <input type="text" placeholder='Name' value={name} onChange={(e)=>setname(e.target.value)} 
-        className={`w-150 h-18 px-5 rounded-xl outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
-        text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}/>
+        className={`w-full h-14 sm:h-16 md:h-18 px-5 rounded-xl outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        text-lg sm:text-xl md:text-[26px] font-serif ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}/>
         
         <input type="text" placeholder="Email" value={email} onChange={(e)=>setemail(e.target.value)}
-        className={`w-150 h-18 px-5 rounded-xl  outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
-        text-[26px] ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}
+        className={`w-full h-14 sm:h-16 md:h-18 px-5 rounded-xl outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        text-lg sm:text-xl md:text-[26px] font-serif ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}
         />
         
         <input type="password" placeholder="Password" value={password} onChange={(e)=>setpassword(e.target.value)}
-        className={`w-150 h-18 px-5 rounded-xl text-sm outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
-        text-[25px] ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}
+        className={`w-full h-14 sm:h-16 md:h-18 px-5 rounded-xl outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100
+        text-lg sm:text-xl md:text-[25px] font-serif ${dark ? "bg-gray-800 text-white placeholder-white border border-black" : "bg-white text-black border border-purple-200"}`}
         />
 
-        <div className="text-right relative left-44">
-          <button type="button" className={`text-[19px] font-medium hover:text-purple-600 ${ dark ? "text-gray-200" : "text-gray-500"}`}>
+        <div className="text-right w-full">
+          <button type="button" className={`text-base sm:text-[19px] font-medium hover:text-purple-600 ${ dark ? "text-gray-200" : "text-gray-500"}`}>
           Forgot password?
           </button>
         </div>
 
-         <button type="submit" disabled={loading} className={`mt-2 h-16 rounded-xl transition duration-300 hover:scale-105 cursor-pointer
-        text-[26px] font-serif w-150 ${dark ? "bg-purple-800 text-white" : "bg-black text-white"}`}>
+         <button type="submit" disabled={loading} className={`mt-2 h-14 sm:h-16 rounded-xl transition duration-300 hover:scale-105 cursor-pointer
+        text-lg sm:text-xl md:text-[26px] font-serif w-full ${dark ? "bg-purple-800 text-white" : "bg-black text-white"}`}>
           {loading ? "SigningUp" : "SignUp"}
         </button>
       </form>
@@ -126,23 +127,23 @@ const signUp = async(e)=>{
 
       {/*OR CONTINE WITH LINE*/}
 
-      <div className="flex items-center gap-4 w-full max-w-[420px] my-6 relative top-55 left-52">
+      <div className="flex items-center gap-4 w-full max-w-[420px] my-6">
         <div className="flex-1 h-px bg-gray-600"></div>
 
-         <span className={`text-[20px] font-medium whitespace-nowrap ${dark ? "text-white" : "text-gray-600"}`}>or continue with</span>
+         <span className={`text-base sm:text-[20px] font-medium whitespace-nowrap ${dark ? "text-white" : "text-gray-600"}`}>or continue with</span>
 
         <div className="flex-1 h-px bg-gray-600"></div>
       </div>
 
 
       {/**LOGIN WITH GOOGLE BUTTOn */}
-     <button type="button" className={`w-150 h-16 rounded-xl text-[25px] font-medium flex items-center justify-center gap-4 transition duration-300 hover:scale-105 cursor-pointer
-      font-serif items-center relative top-60 left-30 ${dark ? "bg-gray-800 text-white border border-black" : "bg-white text-black border border-gray-300"}`}
+     <button type="button" className={`w-full max-w-[420px] h-14 sm:h-16 rounded-xl text-lg sm:text-xl md:text-[25px] font-medium flex items-center justify-center gap-4 transition duration-300 hover:scale-105 cursor-pointer
+      font-serif ${dark ? "bg-gray-800 text-white border border-black" : "bg-white text-black border border-gray-300"}`}
       onClick={authGoogle}><FcGoogle size={38}/>Continue with Google</button>
 
 
       {/**SIGNUP */}
-      <p className={`text-center text-[20px] mt-3 relative top-68 right-150  ${dark ? "text-gray-300" : "text-black"}`}>Already have an account?{" "}
+      <p className={`text-center text-base sm:text-[20px] mt-6 w-full max-w-[420px] ${dark ? "text-gray-300" : "text-black"}`}>Already have an account?{" "}
 
       <Link to="/login" className={`font-semibold hover:text-purple-600 transition ${dark ? "text-purple-400" : "text-black"}`}>Login</Link></p>
 
