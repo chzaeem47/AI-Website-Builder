@@ -46,20 +46,22 @@ function HomeLeftSideBar() {
   };
 
   return (
-    <aside className="absolute left-5 top-2 bottom-5 w-[105px] flex flex-col items-center py-5 z-20">
+    <aside className="hidden sm:flex absolute left-2 sm:left-3 md:left-5 top-2 bottom-2 sm:bottom-3 md:bottom-5 w-[60px] sm:w-[84px] md:w-[105px] sm:flex-col items-center py-3 sm:py-4 md:py-5 z-20">
       {/* Logo Button */}
       <button
         type="button"
         aria-label="Quantum AI"
-        className={`w-[62px] h-[62px] rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300 ${
+        className={`w-[40px] h-[40px] sm:w-[52px] sm:h-[52px] md:w-[62px] md:h-[62px] rounded-full flex items-center justify-center hover:scale-105 transition-all duration-300 ${
           darkMode ? "bg-white/5 shadow-[0_4px_12px_rgba(0,0,0,0.3)]" : ""
         }`}
       >
-        <FcBiotech size={48} />
+        <span className="inline-flex scale-[0.65] sm:scale-[0.85] md:scale-100">
+          <FcBiotech size={48} />
+        </span>
       </button>
 
       {/* Navigation Menu */}
-      <nav className="mt-8 flex flex-col items-center gap-5">
+      <nav className="mt-4 sm:mt-6 md:mt-8 flex flex-col items-center gap-2 sm:gap-3 md:gap-5">
         {menuItems.map((item, index) => (
           <button
             key={item.id}
@@ -68,7 +70,7 @@ function HomeLeftSideBar() {
             aria-label={item.label}
             onClick={() => handleNavigation(item)}
             className={`
-              group w-[58px] h-[58px] rounded-full flex items-center justify-center text-[25px] border transition-all duration-300
+              group w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] md:w-[58px] md:h-[58px] rounded-full flex items-center justify-center text-[16px] sm:text-[20px] md:text-[25px] border transition-all duration-300
               ${
                 index === 1
                   ? darkMode
@@ -87,7 +89,7 @@ function HomeLeftSideBar() {
         ))}
       </nav>
 
-      <div className="mt-auto flex flex-col items-center gap-5">
+      <div className="mt-auto flex flex-col items-center gap-2 sm:gap-3 md:gap-5">
         {/* Theme Toggle Button */}
         <button
           type="button"
@@ -95,7 +97,7 @@ function HomeLeftSideBar() {
           title="Toggle Theme"
           onClick={() => dispatch(toggleTheme())}
           className={`
-            group w-[58px] h-[58px] rounded-full flex items-center justify-center text-[25px] border transition-all duration-300
+            group w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] md:w-[58px] md:h-[58px] rounded-full flex items-center justify-center text-[16px] sm:text-[20px] md:text-[25px] border transition-all duration-300
             ${
               darkMode
                 ? "bg-[#1e1e2e]/95 text-gray-400 border-gray-700 shadow-[0_6px_16px_rgba(0,0,0,0.4)] hover:bg-[#2a2a3c] hover:text-white hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(0,0,0,0.6)]"
@@ -114,7 +116,7 @@ function HomeLeftSideBar() {
           aria-label="All apps"
           title="All apps"
           className={`
-            w-[58px] h-[58px] rounded-full flex items-center justify-center text-[28px] transition-all duration-300
+            w-[36px] h-[36px] sm:w-[48px] sm:h-[48px] md:w-[58px] md:h-[58px] rounded-full flex items-center justify-center text-[18px] sm:text-[22px] md:text-[28px] transition-all duration-300
             ${
               darkMode
                 ? "text-gray-400 bg-[#1e1e2e]/95 hover:bg-[#2a2a3c]/80 border border-gray-700 shadow-[0_6px_16px_rgba(0,0,0,0.4)]"

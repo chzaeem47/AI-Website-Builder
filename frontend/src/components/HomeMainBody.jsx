@@ -13,10 +13,10 @@ function HomeMainBody() {
     <div
       className="
         absolute
-        top-[90px]
-        left-[120px]
-        right-4
-        bottom-4
+        top-[70px] sm:top-[80px] md:top-[90px]
+        left-2 sm:left-[95px] md:left-[120px]
+        right-2 sm:right-3 md:right-4
+        bottom-2 sm:bottom-3 md:bottom-4
         overflow-hidden
       "
     >
@@ -28,8 +28,9 @@ function HomeMainBody() {
           top-[48%]
           -translate-x-1/2
           -translate-y-1/2
-          w-[750px]
-          h-[300px]
+          w-[92%] sm:w-[550px] md:w-[750px]
+          max-w-[750px]
+          h-[160px] sm:h-[220px] md:h-[300px]
           pointer-events-none
           overflow-visible
         "
@@ -63,15 +64,16 @@ function HomeMainBody() {
         className={`
           absolute
           left-1/2
-          top-35
+          top-16 sm:top-24 md:top-32 lg:top-35
           z-10
           -translate-x-1/2
-          text-5xl
+          w-[92%] sm:w-auto
+          text-2xl sm:text-3xl md:text-4xl lg:text-5xl
           font-semibold
           font-serif
-          leading-16
+          leading-tight sm:leading-snug md:leading-tight lg:leading-16
           text-center
-          whitespace-nowrap
+          whitespace-normal lg:whitespace-nowrap
           transition-colors
           duration-300
           ${darkMode ? "text-white" : "text-black"}

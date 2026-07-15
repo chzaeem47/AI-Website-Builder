@@ -2,18 +2,22 @@ import React, { useState } from "react";
 import { FcBiotech } from "react-icons/fc";
 import { IoIosArrowDown } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { LuLayoutGrid } from "react-icons/lu";
+import { FiClock, FiSun, FiMoon } from "react-icons/fi";
+import { BiDollar } from "react-icons/bi";
 import { serverURL } from "../App.jsx";
 import axios from "axios";
 import { setUserData } from "../redux/userSlice.js";
+import { toggleTheme } from "../redux/userSlice.js";
 
 function HomeBodyHeader() {
   const { userData, darkMode } = useSelector((state) => state.user);
   const isLoggedIn = Boolean(userData?._id);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [dropdown, setDropdown] = useState(false);
 
   const logout = async () => {
@@ -33,11 +37,11 @@ function HomeBodyHeader() {
     <div
       className={`
         absolute
-        top-4
-        left-[120px]
-        right-4
-        bottom-4
-        rounded-[28px]
+        top-2 sm:top-3 md:top-4
+        left-2 sm:left-[95px] md:left-[120px]
+        right-2 sm:right-3 md:right-4
+        bottom-2 sm:bottom-3 md:bottom-4
+        rounded-[18px] sm:rounded-[24px] md:rounded-[28px]
         overflow-hidden
         bg-center
         bg-no-repeat
@@ -51,16 +55,16 @@ function HomeBodyHeader() {
         }
       `}
     >
-      <div className="relative flex items-center justify-between px-5 pt-4">
-        {/* Left model selector */}
+      <div className="relative flex items-center justify-start sm:justify-between flex-wrap sm:flex-nowrap gap-2 px-2 sm:px-3 md:px-5 pt-2 sm:pt-3 md:pt-4">
+        {/* Left model selector — hidden on small screens/tablets */}
         <button
           type="button"
           className={`
-            flex
+            hidden sm:flex
             items-center
-            gap-2
-            h-[46px]
-            px-4
+            gap-1 sm:gap-2
+            h-[34px] sm:h-[40px] md:h-[46px]
+            px-2 sm:px-3 md:px-4
             rounded-xl
             backdrop-blur-md
             transition-all
@@ -73,18 +77,21 @@ function HomeBodyHeader() {
             }
           `}
         >
-          <span className="text-[20px] font-medium font-serif whitespace-nowrap">
+          <span className="text-[12px] sm:text-[15px] md:text-[20px] font-medium font-serif whitespace-nowrap">
             Quantum 3.5 Pro
           </span>
         </button>
 
-        {/* Center title */}
+        {/* Center title — hidden on small screens/tablets */}
         <h1
           className="
+            hidden sm:block
             relative right-0
-            text-3xl font-serif
+            text-lg sm:text-2xl md:text-3xl
+            font-serif
             font-semibold
             text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-blue-600 to-purple-700
+            whitespace-nowrap
           "
         >
           Quantum AI
@@ -92,14 +99,14 @@ function HomeBodyHeader() {
 
         {/* Right side */}
         {!isLoggedIn ? (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
             <Link
               to="/login"
               className={`
-                h-[46px]
-                px-5
+                h-[34px] sm:h-[40px] md:h-[46px]
+                px-2.5 sm:px-4 md:px-5
                 rounded-xl
-                text-[25px] font-serif
+                text-[13px] sm:text-[18px] md:text-[25px] font-serif
                 font-medium
                 flex
                 items-center
@@ -120,10 +127,10 @@ function HomeBodyHeader() {
             <Link
               to="/signup"
               className={`
-                h-[46px]
-                px-5
+                h-[34px] sm:h-[40px] md:h-[46px]
+                px-2.5 sm:px-4 md:px-5
                 rounded-xl
-                text-[25px] font-serif
+                text-[13px] sm:text-[18px] md:text-[25px] font-serif
                 font-medium
                 flex
                 items-center
@@ -146,13 +153,13 @@ function HomeBodyHeader() {
             <div className="p-[2px] rounded-2xl bg-gradient-to-r from-purple-600 via-violet-500 to-blue-500">
               <div
                 className={`
-                  min-w-[245px]
-                  h-15
-                  px-3
+                  min-w-[140px] sm:min-w-[190px] md:min-w-[245px]
+                  h-12 sm:h-14 md:h-15
+                  px-2 sm:px-3
                   rounded-xl
                   flex
                   items-center
-                  gap-3
+                  gap-1.5 sm:gap-2 md:gap-3
                   transition-colors
                   duration-300
                   ${
@@ -167,8 +174,7 @@ function HomeBodyHeader() {
                     src={userData.avatar}
                     alt={userData.name || "User"}
                     className="
-                      w-13 relative right-1
-                      h-13
+                      w-8 h-8 sm:w-10 sm:h-10 md:w-13 md:h-13 relative right-1
                       rounded-full
                       object-cover
                       border-2
@@ -176,12 +182,14 @@ function HomeBodyHeader() {
                     "
                   />
                 ) : (
-                  <FaUserCircle size={36} className="text-white" />
+                  <span className="inline-flex scale-[0.7] sm:scale-[0.85] md:scale-100">
+                    <FaUserCircle size={36} className="text-white" />
+                  </span>
                 )}
 
                 <div className="min-w-0">
                   <h2
-                    className="text-[21px] truncate font-serif text-transparent bg-clip-text
+                    className="text-[13px] sm:text-[17px] md:text-[21px] truncate font-serif text-transparent bg-clip-text
                     bg-gradient-to-r from-blue-600 via-purple-600 to-pink-700
                     font-semibold"
                   >
@@ -189,7 +197,7 @@ function HomeBodyHeader() {
                   </h2>
 
                   <p
-                    className={`text-[14px] font-sans relative bottom-1 ${
+                    className={`text-[10px] sm:text-[12px] md:text-[14px] font-sans relative bottom-1 ${
                       darkMode ? "text-gray-300" : "text-black"
                     }`}
                   >
@@ -202,12 +210,14 @@ function HomeBodyHeader() {
                   onClick={() => setDropdown(!dropdown)}
                   className="ml-auto"
                 >
-                  <IoIosArrowDown
-                    size={24}
-                    className={`text-purple-700 transition-transform duration-300 ${
-                      dropdown ? "rotate-180" : ""
-                    }`}
-                  />
+                  <span className="inline-flex scale-[0.75] sm:scale-[0.9] md:scale-100">
+                    <IoIosArrowDown
+                      size={24}
+                      className={`text-purple-700 transition-transform duration-300 ${
+                        dropdown ? "rotate-180" : ""
+                      }`}
+                    />
+                  </span>
                 </button>
               </div>
             </div>
@@ -217,9 +227,9 @@ function HomeBodyHeader() {
                 className={`
                   absolute
                   right-0
-                  top-[68px]
-                  w-[150px]
-                  p-2
+                  top-[54px] sm:top-[62px] md:top-[68px]
+                  w-[120px] sm:w-[135px] md:w-[150px]
+                  p-1.5 sm:p-2
                   rounded-xl
                   z-50
                   transition-all
@@ -236,10 +246,10 @@ function HomeBodyHeader() {
                   onClick={logout}
                   className="
                     w-full
-                    px-4
-                    py-2
+                    px-3 sm:px-4
+                    py-1.5 sm:py-2
                     rounded-lg
-                    text-[17px]
+                    text-[14px] sm:text-[17px]
                     font-serif
                     text-white
                     bg-red-600
@@ -254,6 +264,51 @@ function HomeBodyHeader() {
             )}
           </div>
         )}
+
+        {/* Relocated icons for small screens: History, Pricing, Theme toggle */}
+        <div className="flex sm:hidden items-center gap-1.5">
+          <button
+            type="button"
+            aria-label="History"
+            title="History"
+            onClick={() => navigate("/dashboard")}
+            className={`w-[34px] h-[34px] rounded-full flex items-center justify-center text-[15px] border transition-all duration-300 ${
+              darkMode
+                ? "bg-[#1e1e2e]/95 text-gray-300 border-gray-700"
+                : "bg-white/95 text-gray-800 border-white"
+            }`}
+          >
+            <FiClock />
+          </button>
+
+          <button
+            type="button"
+            aria-label="Pricing"
+            title="Pricing"
+            onClick={() => navigate("/pricing")}
+            className={`w-[34px] h-[34px] rounded-full flex items-center justify-center text-[15px] border transition-all duration-300 ${
+              darkMode
+                ? "bg-[#1e1e2e]/95 text-gray-300 border-gray-700"
+                : "bg-white/95 text-gray-800 border-white"
+            }`}
+          >
+            <BiDollar />
+          </button>
+
+          <button
+            type="button"
+            aria-label="Toggle Theme"
+            title="Toggle Theme"
+            onClick={() => dispatch(toggleTheme())}
+            className={`w-[34px] h-[34px] rounded-full flex items-center justify-center text-[15px] border transition-all duration-300 ${
+              darkMode
+                ? "bg-[#1e1e2e]/95 text-gray-300 border-gray-700"
+                : "bg-white/95 text-gray-800 border-white"
+            }`}
+          >
+            {darkMode ? <FiMoon /> : <FiSun />}
+          </button>
+        </div>
       </div>
     </div>
   );
